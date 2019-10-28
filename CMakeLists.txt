@@ -5,7 +5,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(CUDAVol LANGUAGES CXX CUDA)
 
-add_executable(CUDAVol src/main.cpp src/shader.cpp)
+add_executable(CUDAVol src/main.cpp src/shader.cpp src/program.cpp src/window.cpp)
+
+add_definitions(-DDATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 
 set_target_properties(CUDAVol PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 set_target_properties(CUDAVol PROPERTIES POSITION_INDEPENDENT_CODE ON)

@@ -21,19 +21,36 @@
 
   #############################################################################
 
-  main.cpp
+  window.h
 
-  Main source file, application starting point.
+  OpenGL context and window declaration. Window is resizable etc.
 
   October 2019
 */
 
-#include "window.h"
-#include <iostream>
+#pragma once
 
-int main(int argc, char **argv) {
-  CUDAVol::Window window(glm::ivec2(1024, 768), "CUDAVol");
-  while (window.update()) {}
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
+#include "glm/vec2.hpp"
+#include <string>
 
-  return EXIT_SUCCESS;
-}
+namespace CUDAVol {
+  class Window {
+  private:
+    GLFWwindow *object;
+    glm::ivec2 windowDims;
+    glm::ivec2 framebufferDims;
+
+  public:
+    Window(glm::ivec2 windowDims, const std::string &windowTitle);
+    ~Window();
+
+    bool update();
+    void close();
+
+    GLFWwindow *getObject() const;
+    glm::ivec2 getWindowDims() const;
+    glm::ivec2 getFramebufferDims() const;
+  };
+} // namespace CUDAVol
