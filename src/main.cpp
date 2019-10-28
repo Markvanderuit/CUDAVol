@@ -28,12 +28,19 @@
   October 2019
 */
 
+#include "renderer.h"
 #include "window.h"
 #include <iostream>
 
 int main(int argc, char **argv) {
+  // Initialize components
   CUDAVol::Window window(glm::ivec2(1024, 768), "CUDAVol");
-  while (window.update()) {}
+  CUDAVol::Renderer renderer(window);
+
+  // Start rendering loop
+  while (window.update()) {
+    renderer.update();
+  }
 
   return EXIT_SUCCESS;
 }
