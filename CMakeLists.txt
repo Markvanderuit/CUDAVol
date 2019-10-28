@@ -9,3 +9,23 @@ add_executable(CUDAVol src/main.cpp)
 
 set_target_properties(CUDAVol PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 set_target_properties(CUDAVol PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+# Add GLEW library from source
+set(BUILD_UTILS OFF CACHE BOOL "" FORCE)
+add_subdirectory(thirdparty/glew/build/cmake)
+
+# Add GLFW library from source
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(thirdparty/glfw)
+
+# Add libs to project
+target_link_libraries(CUDAVol glew_s glfw)
+
+# Add include directories for libs to project
+target_include_directories(
+  CUDAVol PRIVATE
+  thirdparty/glew/include
+  thirdparty/glfw/include
+)

@@ -24,13 +24,47 @@
   main.cpp
 
   Main source file, application starting point.
-  
+
   October 2019
 */
 
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 #include <iostream>
 
 int main(int argc, char **argv) {
-  std::cout << "Hello world" << std::endl;
+  // Initialize GLFW
+  if (auto c = glfwInit(); !c) {
+    std::cerr << "GLFW initialization returned code " << c << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  // Create rendering context and window
+  GLFWwindow *window = glfwCreateWindow(256, 256, "CUDAVol", nullptr, nullptr);
+  if (!window) {
+    std::cerr << "Window initialization failed" << std::endl;
+    return EXIT_FAILURE;
+  }
+  glfwMakeContextCurrent(window);
+
+  // Check GL
+  if (auto c = glGetError(); c != GL_NO_ERROR) {
+    std::cerr << "glGetError() returned code " << c << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  // Initialize GLEW
+  if (auto c = glewInit(); c != GLEW_OK) {
+    std::cerr << "GLEW initialization returned code " << c << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  std::cout << "Hello OpenGL" << std::endl;
+  while (!glfwWindowShouldClose(window)) {
+    // ...
+    glfwPollEvents();
+  }
+  std::cout << "Goodbye OpenGL" << std::endl;
+
   return EXIT_SUCCESS;
 }
