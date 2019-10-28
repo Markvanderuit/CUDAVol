@@ -40,6 +40,7 @@ namespace CUDAVol {
     GLuint object;
 
   public:
+    Program(const std::string &vertexFilePath, const std::string &fragmentFilePath);
     Program(const std::vector<Shader> &shaders);
     ~Program();
 

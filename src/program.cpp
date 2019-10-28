@@ -33,6 +33,10 @@
 #include <string>
 
 namespace CUDAVol {
+  Program::Program(const std::string &vertexFilePath, const std::string &fragmentFilePath)
+    : Program({Shader(vertexFilePath, GL_VERTEX_SHADER),
+               Shader(fragmentFilePath, GL_FRAGMENT_SHADER)}) {}
+
   Program::Program(const std::vector<Shader> &shaders) {
     // Create program object
     object = glCreateProgram();
