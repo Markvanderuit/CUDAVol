@@ -32,7 +32,7 @@
 
 #include "GL/glew.h"
 #include "shader.h"
-#include <vector>
+#include <initializer_list>
 
 namespace CUDAVol {
   class Program {
@@ -41,7 +41,7 @@ namespace CUDAVol {
 
   public:
     Program(const std::string &vertexFilePath, const std::string &fragmentFilePath);
-    Program(const std::vector<Shader> &shaders);
+    Program(const std::initializer_list<Shader> &shaders);
     ~Program();
 
     void beginUse() const;

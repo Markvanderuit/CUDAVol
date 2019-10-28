@@ -36,7 +36,7 @@
 #include <vector>
 
 namespace CUDAVol {
-  Shader::Shader(const std::string &filePath, GLenum shaderType) : object(1) {
+  Shader::Shader(const std::string &filePath, GLenum shaderType) {
     // Attempt to read shader file
     std::ifstream ifs(filePath, std::ios::in | std::ios::binary);
     if (!ifs.is_open()) {

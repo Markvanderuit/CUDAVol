@@ -30,16 +30,17 @@
 
 #pragma once
 #include "program.h"
+#include "window.h"
 
 namespace CUDAVol {
   class Renderer {
   private:
-    Program colorCorrectionPrg;
     Program windowDrawPrg;
     GLuint quadVAO;
+    const Window &window;
 
   public:
-    Renderer();
+    Renderer(const Window &window);
     ~Renderer();
 
     void update();

@@ -37,7 +37,7 @@ namespace CUDAVol {
     : Program({Shader(vertexFilePath, GL_VERTEX_SHADER),
                Shader(fragmentFilePath, GL_FRAGMENT_SHADER)}) {}
 
-  Program::Program(const std::vector<Shader> &shaders) {
+  Program::Program(const std::initializer_list<Shader> &shaders) {
     // Create program object
     object = glCreateProgram();
     for (const auto &shader : shaders) {
@@ -55,7 +55,7 @@ namespace CUDAVol {
       GLint logLength = 0;
       glGetProgramiv(object, GL_INFO_LOG_LENGTH, &logLength);
       std::string err(logLength, ' ');
-      glGetProgramInfoLog(object, logLength, nullptr, &err[0]);
+      glGetProgramInfoLog(object, logLength, &logLength, &err[0]);
 
       // TODO: Log and exit
       std::cerr << "Error loading program, linking error: " << err << std::endl;

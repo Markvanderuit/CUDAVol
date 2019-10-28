@@ -30,14 +30,14 @@
 
 #include "renderer.h"
 #include <array>
+#include <iostream>
 #include <string>
 
 const std::string shaderDirectory = std::string(DATA_DIR) + "/shaders/";
 
 namespace CUDAVol {
-  Renderer::Renderer()
-    : colorCorrectionPrg(shaderDirectory + "quad_passthrough.vert",
-                         shaderDirectory + "color_correction.frag"),
+  Renderer::Renderer(const Window &window)
+    : window(window),
       windowDrawPrg(shaderDirectory + "quad_passthrough.vert",
                     shaderDirectory + "quad_passthrough.frag") {
     // Define screen filling quad vertices
@@ -53,7 +53,7 @@ namespace CUDAVol {
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 
     // Copy vertex data to buffer
-    glBufferData(GL_ARRAY_BUFFER, quad.size(), quad.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, quad.size() * sizeof(GLfloat), quad.data(), GL_STATIC_DRAW);
 
     // Enable attribute index 0
     glEnableVertexAttribArray(0);
@@ -70,5 +70,20 @@ namespace CUDAVol {
     glDeleteVertexArrays(1, &quadVAO);
   }
 
-  void Renderer::update() {}
+  void Renderer::update() {
+    auto frameDims = window.getFramebufferDims();
+
+    // Prepare for drawing
+    glViewport(0, 0, frameDims.x, frameDims.y);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    windowDrawPrg.beginUse();
+
+    // Draw screen quad
+    glBindVertexArray(quadVAO);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindVertexArray(0);
+
+    // Clean up drawing
+    windowDrawPrg.endUse();
+  }
 } // namespace CUDAVol
