@@ -28,4 +28,5 @@ target_include_directories(
   CUDAVol PRIVATE
   thirdparty/glew/include
   thirdparty/glfw/include
+  thirdparty/glm
 )
