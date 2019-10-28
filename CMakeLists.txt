@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(CUDAVol LANGUAGES CXX CUDA)
 
-add_executable(CUDAVol src/main.cpp)
+add_executable(CUDAVol src/main.cpp src/shader.cpp)
 
 set_target_properties(CUDAVol PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 set_target_properties(CUDAVol PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -29,4 +29,5 @@ target_include_directories(
   thirdparty/glew/include
   thirdparty/glfw/include
   thirdparty/glm
+  include
 )

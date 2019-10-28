@@ -21,51 +21,27 @@
 
   #############################################################################
 
-  main.cpp
+  shader.h
 
-  Main source file, application starting point.
+  OpenGL shader object declaration.
 
   October 2019
 */
 
+#pragma once
+
 #include "GL/glew.h"
-#include "GLFW/glfw3.h"
-#include "glm/glm.hpp"
-#include <iostream>
+#include <string>
 
-int main(int argc, char** argv) {
-  // Initialize GLFW
-  if (auto c = glfwInit(); !c) {
-    std::cerr << "GLFW initialization returned code " << c << std::endl;
-    return EXIT_FAILURE;
-  }
+namespace CUDAVol {
+  class Shader {
+  private:
+    GLuint object;
 
-  // Create rendering context and window
-  GLFWwindow* window = glfwCreateWindow(256, 256, "CUDAVol", nullptr, nullptr);
-  if (!window) {
-    std::cerr << "Window initialization failed" << std::endl;
-    return EXIT_FAILURE;
-  }
-  glfwMakeContextCurrent(window);
+  public:
+    Shader(const std::string &filePath, GLenum shaderType);
+    ~Shader();
 
-  // Check GL
-  if (auto c = glGetError(); c != GL_NO_ERROR) {
-    std::cerr << "glGetError() returned code " << c << std::endl;
-    return EXIT_FAILURE;
-  }
-
-  // Initialize GLEW
-  if (auto c = glewInit(); c != GLEW_OK) {
-    std::cerr << "GLEW initialization returned code " << c << std::endl;
-    return EXIT_FAILURE;
-  }
-
-  std::cout << "Hello OpenGL" << std::endl;
-  while (!glfwWindowShouldClose(window)) {
-    // ...
-    glfwPollEvents();
-  }
-  std::cout << "Goodbye OpenGL" << std::endl;
-
-  return EXIT_SUCCESS;
-}
+    GLuint getObject() const;
+  };
+} // namespace CUDAVol

@@ -2,7 +2,9 @@
 
 Simple CUDA-based volume rendering demonstration
 
-## Third party libraries
+## Third party software
 
-* GLEW
-* GLFW
+* CUDA
+* GLEW (bundled)
+* GLFW (bundled)
+* GLM (bundled)
