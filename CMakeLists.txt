@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.11)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+project(CUDAVol LANGUAGES CXX CUDA)
+
+add_executable(CUDAVol src/main.cpp)
+
+set_target_properties(CUDAVol PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+set_target_properties(CUDAVol PROPERTIES POSITION_INDEPENDENT_CODE ON)
