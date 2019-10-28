@@ -5,10 +5,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(CUDAVol LANGUAGES CXX CUDA)
 
-add_executable(CUDAVol src/main.cpp src/shader.cpp src/program.cpp src/window.cpp)
+# Add executable with source files in /src
+add_executable(CUDAVol)
+add_subdirectory(src)
 
+# Set absolute data directory for shaders and volume files
 add_definitions(-DDATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 
+# Set CUDA flags
 set_target_properties(CUDAVol PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 set_target_properties(CUDAVol PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
@@ -27,7 +31,7 @@ target_link_libraries(CUDAVol glew_s glfw)
 
 # Add include directories for libs to project
 target_include_directories(
-  CUDAVol PRIVATE
+  CUDAVol PUBLIC
   thirdparty/glew/include
   thirdparty/glfw/include
   thirdparty/glm
